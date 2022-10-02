@@ -7,6 +7,7 @@ I dabble with toy scripting languages, having implemented several:
 * [Lisp](https://github.com/skx/yal)
 * BASIC
 * Monkey
+* [evalfilter](https://github.com/skx/evalfilter)
 
 And some other misc things.
 
@@ -29,20 +30,24 @@ Or
 As of today the results, on my desktop system, look like this:
 
 ```
-$ go test -run=Bench -bench=.
+frodo ~/Repos/github.com/skx/toy-language-benchmarks $ go test -run=Bench -bench=. -benchtime=30s
 goos: linux
 goarch: amd64
 pkg: github.com/skx/toy-language-benchmarks
 cpu: AMD A10-6800K APU with Radeon(tm) HD Graphics
-BenchmarkGoFactorial-4    	 4519579	       260.1 ns/op
-BenchmarkYALFactorial-4   	    1064	   1061797 ns/op
-BenchmarkTCLFactorial-4   	      32	  38524019 ns/op
+BenchmarkGoFactorial-4             141407989           249 ns/op
+BenchmarkYALFactorial-4                32666       1175922 ns/op
+BenchmarkTCLFactorial-4                  834      46042433 ns/op
+BenchmarkEvalFilterFactorial-4        160035        227587 ns/op
 PASS
-ok  	github.com/skx/toy-language-benchmarks	3.976s
+ok  	github.com/skx/toy-language-benchmarks	192.035s
 ```
 
 Which means in terms of speed:
 
 * Native Go
+* Evalfilter
+  * Expected as this uses a bytecode virtual machine, which is pretty fast.
 * Lisp
+  * Expected as TCO makes this a reasonably fast benchmark.
 * TCL

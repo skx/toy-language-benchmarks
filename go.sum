@@ -1,4 +1,7 @@
 github.com/skx/critical v0.0.0-20220926055036-15a116cf9312 h1:sjz7KvEMJUnKDY5UDDYQp1zgOe8G1w67/lZO3SntwfI=
 github.com/skx/critical v0.0.0-20220926055036-15a116cf9312/go.mod h1:enBgnomum36QcFwWhO23LkrWH6onwFo+oUzpiR6jDPc=
+github.com/skx/evalfilter/v2 v2.1.19 h1:EeoWfXVi1bw1FeBlojIHrZsU7YVOFCj9tQIj6u6aPRQ=
+github.com/skx/evalfilter/v2 v2.1.19/go.mod h1:Kett8pWXFLb9kfeytJiO+/Ci534U8YcNp6WD+2goYsI=
+github.com/skx/subcommands v0.9.1/go.mod h1:HpOZHVUXT5Rc/Q7UCiyj7h5u6BleDfFjt+vxy2igonA=
 github.com/skx/yal v0.9.0 h1:VNUO4EvaozxPFbrmqcA6BjiZaAIYbzuSuJY2A+6KNS8=
 github.com/skx/yal v0.9.0/go.mod h1:vJerz6qHnUWPFeEdKcicaWnZJtVOw82AXV3nlGt20RU=
