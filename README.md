@@ -2,9 +2,9 @@
 
 I dabble with toy scripting languages, having implemented several:
 
-* TCL
+* [TCL](https://github.com/skx/critical)
 * FORTH
-* Lisp
+* [Lisp](https://github.com/skx/yal)
 * BASIC
 * Monkey
 
