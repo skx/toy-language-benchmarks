@@ -4,12 +4,15 @@ import (
 	"fmt"
 	"testing"
 
+	// critical
+	"github.com/skx/critical/interpreter"
+	criticalSTDLIB "github.com/skx/critical/stdlib"
+
 	// evalfilter
 	"github.com/skx/evalfilter/v2"
 
-	// critical
-	"github.com/skx/critical/interpreter"
-	criticalSTDLIB	"github.com/skx/critical/stdlib"
+	// foth
+	fothEval "github.com/skx/foth/foth/eval"
 
 	// yal
 	"github.com/skx/yal/builtins"
@@ -18,7 +21,6 @@ import (
 	"github.com/skx/yal/primitive"
 	"github.com/skx/yal/stdlib"
 )
-
 
 // fact is a benchmark implementation in pure-go for comparison purposes.
 func fact(n int64) int64 {
@@ -123,7 +125,6 @@ fact 100
 	}
 }
 
-
 // BenchmarkEvalFilterFactorial allows running the evalfilter benchmark.
 func BenchmarkEvalFilterFactorial(b *testing.B) {
 
@@ -155,6 +156,46 @@ return false;
 	if err != nil {
 		fmt.Printf("Failed to get result: %s\n", err.Error())
 		panic(nil)
+	}
+
+}
+
+// BenchmarkFothFactorial allows running the foth benchmark
+func BenchmarkFothFactorial(b *testing.B) {
+
+	prg := `
+: factorial recursive  dup 1 >  if  dup 1 -  factorial *  then  ;
+100 factorial
+`
+	// Create
+	f := fothEval.New()
+
+	var err error
+
+	// Run
+	for i := 0; i < b.N; i++ {
+
+		f.Reset()
+		err = f.Eval(prg)
+
+	}
+
+	if err != nil {
+		fmt.Printf("failed to run forth program: %s\n", err)
+		panic(err)
+	}
+
+	// Get the result
+	var res float64
+	res, err = f.Stack.Pop()
+
+	if err != nil {
+		fmt.Printf("failed to get result: %s\n", err)
+		panic(err)
+	}
+
+	if res != 93326215443944102188325606108575267240944254854960571509166910400407995064242937148632694030450512898042989296944474898258737204311236641477561877016501813248.000000 {
+		fmt.Printf("Unexpected result:%f\n", res)
 	}
 
 }
