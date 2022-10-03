@@ -10,5 +10,6 @@ require (
 
 require (
 	github.com/skx/foth/foth v0.0.0-20221003035016-4ade3b747f1e // indirect
+	github.com/skx/gobasic v0.0.0-20220905163538-1574aa4235f0 // indirect
 	github.com/skx/monkey v0.0.0-20220903061420-ce0950cba1f4 // indirect
 )
