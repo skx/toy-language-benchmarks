@@ -1,17 +1,15 @@
 # Toy Language Benchmark
 
-I dabble with toy scripting languages, having implemented several:
+I dabble with toy scripting languages, having implemented several including:
 
 * [TCL](https://github.com/skx/critical)
 * [FORTH](https://github.com/skx/foth)
 * [Lisp](https://github.com/skx/yal)
-* BASIC
-* Monkey
+* [Monkey](https://github.com/skx/monkey)
 * [evalfilter](https://github.com/skx/evalfilter)
 
-And some other misc things.
+This repository is designed to host a quick, unscientific, benchmark of those implementations.
 
-This repository is designed to have a quick benchmark, unscientific, of those implementations.
 
 
 
@@ -27,34 +25,40 @@ Or
 
     go test -run=Bench -bench=. -benchtime=30s
 
+* **NOTE**: Some of the implementations actually fail!
+  * (Specifically because they cannot handle numbers as large as those involved in 100!.)
+  * I'm glossing over that because the benchmark does measure the overhead of recursing, numeric operations, and similar.
+
+
 
 
 ## Results
 
 As of today the results, on my desktop system, look like this:
 
-```
+```sh
 $ go test -run=Bench -bench=.
-goos: linux
-goarch: amd64
-pkg: github.com/skx/toy-language-benchmarks
-cpu: AMD A10-6800K APU with Radeon(tm) HD Graphics
-BenchmarkGoFactorial-4              4783036         252 ns/op
-BenchmarkYALFactorial-4                1056     1102693 ns/op
-BenchmarkTCLFactorial-4                  33    39381176 ns/op
-BenchmarkEvalFilterFactorial-4         5461      204603 ns/op
-BenchmarkFothFactorial-4              10000      145922 ns/op
+..
+BenchmarkGoFactorial-10              1939436        620 ns/op
+BenchmarkEvalFilterFactorial-10        13442      89138 ns/op
+BenchmarkFothFactorial-10              10000     120620 ns/op
+BenchmarkMonkeyFactorial-10             5034     231593 ns/op
+BenchmarkYALFactorial-10                3440     327744 ns/op
+BenchmarkTCLFactorial-10                 100   11065288 ns/op
 PASS
-ok    github.com/skx/toy-language-benchmarks  6.709s
+ok   github.com/skx/toy-language-benchmarks 8.841s
 ```
 
 Which means in terms of speed:
 
 * Native Go
-* FOTH
-  * Expected as this is essentially a bytecode virtual machine, which is pretty fast.
+  * Obviously this would be best, being compiled.
 * Evalfilter
   * Expected as this uses a bytecode virtual machine, which is pretty fast.
+* FOTH
+  * Expected as this is essentially a bytecode virtual machine, which is pretty fast.
+* Monkey
+  * This was a surprise, as there's no particular optimisation or cleverness here.
 * Lisp
   * Expected as TCO makes this a reasonably fast benchmark.
 * TCL

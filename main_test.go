@@ -14,6 +14,12 @@ import (
 	// foth
 	fothEval "github.com/skx/foth/foth/eval"
 
+	// monkey
+	monkeyEval   "github.com/skx/monkey/evaluator"
+	monkeyLexer  "github.com/skx/monkey/lexer"
+	monkeyObject "github.com/skx/monkey/object"
+	monkeyParser "github.com/skx/monkey/parser"
+
 	// yal
 	"github.com/skx/yal/builtins"
 	"github.com/skx/yal/env"
@@ -177,7 +183,6 @@ func BenchmarkFothFactorial(b *testing.B) {
 
 		f.Reset()
 		err = f.Eval(prg)
-
 	}
 
 	if err != nil {
@@ -196,6 +201,39 @@ func BenchmarkFothFactorial(b *testing.B) {
 
 	if res != 93326215443944102188325606108575267240944254854960571509166910400407995064242937148632694030450512898042989296944474898258737204311236641477561877016501813248.000000 {
 		fmt.Printf("Unexpected result:%f\n", res)
+	}
+
+}
+
+
+
+// BenchmarkMonkeyFactorial allows running the monkey benchmark
+func BenchmarkMonkeyFactorial(b *testing.B) {
+
+	prg := `
+function fact( n ) {
+  if ( n <= 1 ) { return 1; }
+  return ( n * fact( n - 1 ) );
+}
+return fact(100);
+`
+
+	env := monkeyObject.NewEnvironment()
+	l := monkeyLexer.New(prg)
+	p := monkeyParser.New(l)
+
+
+	program := p.ParseProgram()
+	if len(p.Errors()) != 0 {
+		for _, msg := range p.Errors() {
+			fmt.Printf("\t%s\n", msg)
+		}
+		panic("failed to parse program")
+	}
+
+	// Run
+	for i := 0; i < b.N; i++ {
+		monkeyEval.Eval(program, env)
 	}
 
 }
