@@ -7,3 +7,5 @@ require (
 	github.com/skx/evalfilter/v2 v2.1.19
 	github.com/skx/yal v0.9.0
 )
+
+require github.com/skx/foth/foth v0.0.0-20221003035016-4ade3b747f1e // indirect
